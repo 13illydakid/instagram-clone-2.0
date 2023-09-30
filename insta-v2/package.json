@@ -1,0 +1,25 @@
+{
+  "name": "insta-v2",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "react": "latest",
+    "react-dom": "latest",
+    "next": "latest",
+    "next-auth": "latest",
+    "@heroicons/react": "latest",
+    "firebase": "latest",
+    "react-firebase-hooks": "latest",
+    "tailwind-scrollbar-hide": "latest"
+  },
+  "devDependencies": {
+    "autoprefixer": "latest",
+    "postcss": "latest",
+    "tailwindcss": "latest"
+  }
+}
