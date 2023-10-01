@@ -8,16 +8,18 @@
     "start": "next start"
   },
   "dependencies": {
+    "@heroicons/react": "^1.0.6",
+    "@tailwindcss/forms": "^0.5.6",
+    "firebase": "latest",
+    "next": "^12.2.5",
+    "next-auth": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "next": "latest",
-    "next-auth": "latest",
-    "@heroicons/react": "latest",
-    "firebase": "latest",
     "react-firebase-hooks": "latest",
     "tailwind-scrollbar-hide": "latest"
   },
   "devDependencies": {
+    "@faker-js/faker": "^6.0.0",
     "autoprefixer": "latest",
     "postcss": "latest",
     "tailwindcss": "latest"

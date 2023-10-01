@@ -14,5 +14,23 @@ module.exports = {
       },
     },
   },
-  plugins: [],
-}
+  plugins: [
+    require("@tailwindcss/forms")
+  ],
+};
+
+
+// module.exports = {
+//   mode: 'jit',
+//   purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
+//   media: false,
+//   them: {
+//     extend: {},
+//   },
+//   variants: {
+//     extend: {},
+//   },
+//   plugins: [
+//     require("@tailwindcss/forms")
+//   ],
+// };
