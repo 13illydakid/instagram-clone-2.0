@@ -16,12 +16,13 @@
     "react": "latest",
     "react-dom": "latest",
     "react-firebase-hooks": "latest",
-    "tailwind-scrollbar-hide": "latest"
+    "tailwind-scrollbar-hide": "^1.1.7"
   },
   "devDependencies": {
     "@faker-js/faker": "^6.0.0",
     "autoprefixer": "latest",
     "postcss": "latest",
+    "tailwind-scrollbar": "^3.0.5",
     "tailwindcss": "latest"
   }
 }
