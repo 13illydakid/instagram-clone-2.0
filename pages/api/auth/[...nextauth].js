@@ -23,7 +23,10 @@ export const authOptions = {
       session.user.uid = token.sub;
       return session;
     }
-  }
+  },
+  secret: GoogleProvider({
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  })
 
   //   theme: {
   //    logo: "",
