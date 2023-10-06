@@ -1,7 +1,8 @@
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
+// import { useSession } from "next-auth/react";
 
-const authOptions = {
+export const authOptions = {
   // Configure one or more authentication providers
   providers: [
     GoogleProvider({
@@ -10,16 +11,18 @@ const authOptions = {
     }),
     // ...add more providers here
   ],
-  secret: [
-    GoogleProvider({
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    })
-  ],
+  // secret: [
+  //   GoogleProvider({
+  //     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  //   })
+  // ],
   pages: {
     signIn: "/auth/signin",
   },
   callbacks: {
     async session({ session, token, user }) {
+      // const { data: session } = useSession();
+      user = session.user
       session.user.username = session.user.name
         .split(" ")
         .join("")
@@ -38,3 +41,18 @@ const authOptions = {
 }
 
 export default NextAuth(authOptions);
+
+// import NextAuth from 'next-auth';
+// import GoogleProvider from 'next-auth/providers/google';
+// export const authOptions = {
+//  providers: [
+//   GoogleProvider({
+//    clientId: process.env.GOOGLE_ID,
+//    clientSecret: process.env.GOOGLE_SECRET,
+//   }),
+//  ],
+//  session: {
+//   strategy: 'jwt',
+//  },
+// };
+// export default NextAuth(authOptions);
