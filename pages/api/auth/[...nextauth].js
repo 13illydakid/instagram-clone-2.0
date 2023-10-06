@@ -1,6 +1,5 @@
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
-// import { useSession } from "next-auth/react";
 
 export const authOptions = {
   // Configure one or more authentication providers
@@ -20,8 +19,6 @@ export const authOptions = {
   },
   callbacks: {
     async session({ session, token, user }) {
-      // const { data: session } = useSession();
-      user = session.user
       session.user.username = session.user.name
         .split(" ")
         .join("")

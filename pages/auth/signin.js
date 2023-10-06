@@ -20,7 +20,7 @@ function signIn({ providers }) {
                      <button
                         className="p-3 bg-blue-500 rounded-lg text-white"
                         onClick={() =>
-                           SignIntoProvider(provider.name, { callbackUrl: "/" })
+                           SignIntoProvider("google", { callbackUrl: "/" })
                         }
                      >
                         Sign in with {provider.name}
