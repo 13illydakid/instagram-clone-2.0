@@ -34,19 +34,14 @@ function signIn({ providers }) {
 }
 
 // Executed in the Server...
-// export async function getServerSideProps() {
-//    const providers = await getProviders();
+export async function getServerSideProps() {
+   const providers = await getProviders();
 
-//    return {
-//       props: {
-//          providers,
-//       },
-//    };
-// }
-export async function(req, res) {
-   const providers = await getProviders()
-   console.log("Providers", providers)
-   res.end()
- }
+   return {
+      props: {
+         providers,
+      },
+   };
+}
 
 export default signIn;
