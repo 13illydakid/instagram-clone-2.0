@@ -10,6 +10,7 @@ export const authOptions = {
     }),
     // ...add more providers here
   ],
+  secret: process.env.NEXTAUTH_SECRET,
   // secret: [
   //   GoogleProvider({
   //     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
