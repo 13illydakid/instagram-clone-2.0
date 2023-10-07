@@ -1,11 +1,11 @@
 // import React from 'react'
 import { getProviders, signIn } from "next-auth/react";
 import Header from "../../components/Header";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 
 // Executed in Browser...
 function Signin({ providers }) {
-   const router = useRouter();
+   // const router = useRouter();
 
    return (
       <>
@@ -24,7 +24,7 @@ function Signin({ providers }) {
                         className="p-3 bg-blue-500 rounded-lg text-white"
                         onClick={() => {
                            signIn(provider.id, { callbackUrl: "/" });
-                           router.push("/")
+                           // router.push("/")
                         }
                         }
                      >

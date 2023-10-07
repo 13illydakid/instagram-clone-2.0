@@ -5,7 +5,7 @@ import { RecoilRoot } from "recoil";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
-    <SessionProvider session={session}>
+    <SessionProvider session={session} basePath="https://gallery.billychiu.dev/api/auth">
       <RecoilRoot>
         <Component {...pageProps} />
       </RecoilRoot>
