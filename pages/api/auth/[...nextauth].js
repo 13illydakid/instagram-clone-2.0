@@ -1,34 +1,91 @@
-import NextAuth from "next-auth/next";
-// import { CredentialsProvider } from "next-auth/providers/credentials";
-import CredentialsProvider from "next-auth/providers/credentials";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { useContext, createContext, useState, useEffect } from "react";
+import { signInWithPopup, signOut, onAuthStateChanged, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../../../firebase";
 
-export const authOptions = {
-  pages: {
-    signIn: '/auth/signin'
-  },
-  providers: [
-    CredentialsProvider({
-      name: 'Credentials',
-      credentials: {},
-      async authorize(credentials) {
-        try {
-          const userCredential = await signInWithEmailAndPassword(auth, credentials.email || '', credentials.password || '');
-          if (userCredential.user) {
-            return userCredential.user;
-          }
-          return null;
-        } catch (error) {
-          console.log(error);
-          return null;
-        }
-      }
-    })
-  ]
+const AuthContext = createContext();
+
+export const AuthContextProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+
+  const googleSignIn = () => {
+    const provider = new GoogleAuthProvider();
+    provider.addScope('profile');
+    provider.addScope('email');
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // const user = result.user;
+        setUser(result.user);
+      }).catch((error) => {
+  const errorCode = error.code;
+  const errorMessage = error.message;
+  const email = error.customData.email;
+  const credential = GoogleAuthProvider.credentialFromError(error);
+})
+  };
+
+const logOut = () => {
+  signOut(auth);
 };
 
-export default NextAuth(authOptions);
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser);
+  });
+  return () => unsubscribe();
+}, [user]);
+
+return (
+  <AuthContext.Provider value={{ user, googleSignIn, logOut }}>
+    {children}
+  </AuthContext.Provider>
+);
+};
+
+export const UserAuth = () => {
+  return useContext(AuthContext);
+};
+
+
+
+
+
+
+
+
+
+// import NextAuth from "next-auth/next";
+// // import { CredentialsProvider } from "next-auth/providers/credentials";
+// import CredentialsProvider from "next-auth/providers/credentials";
+// import { signInWithEmailAndPassword } from "firebase/auth";
+// import { auth } from "../../../firebase";
+
+// export const authOptions = {
+//   pages: {
+//     signIn: '/auth/signin'
+//   },
+//   providers: [
+//     CredentialsProvider({
+//       name: 'Credentials',
+//       credentials: {},
+//       async authorize(credentials) {
+//         try {
+//           const userCredential = await signInWithEmailAndPassword(auth, credentials.email || '', credentials.password || '');
+//           if (userCredential.user) {
+//             return userCredential.user;
+//           }
+//           return null;
+//         } catch (error) {
+//           console.log(error);
+//           return null;
+//         }
+//       }
+//     })
+//   ]
+// };
+
+// export default NextAuth(authOptions);
 
 
 

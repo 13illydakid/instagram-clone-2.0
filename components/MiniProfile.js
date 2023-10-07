@@ -1,8 +1,10 @@
 // import React from 'react'
+import { UserAuth } from "../pages/api/auth/[...nextauth]";
 import { signOut, useSession } from "next-auth/react";
 
 function MiniProfile() {
-   const { data: session } = useSession();
+   // const { data: session } = useSession();
+   const { data: session } = UserAuth();
 
    // console.log(session);
 

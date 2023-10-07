@@ -14,9 +14,11 @@ import { addDoc, collection, deleteDoc, doc, onSnapshot, orderBy, query, serverT
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Moment from "react-moment";
+import { UserAuth } from "../pages/api/auth/[...nextauth]";
 
 function Post({ id, username, userImg, img, caption }) {
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
+  const { user, googleSignIn, logOut } = UserAuth();
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [likes, setLikes] = useState([]);
@@ -37,17 +39,23 @@ function Post({ id, username, userImg, img, caption }) {
 
   useEffect(() => {
     setHasLiked(
-      likes.findIndex((like) => like.id === session?.user?.uid) !== -1
+      likes.findIndex((like) => like.id === user?.uid) !== -1
     )
   }, [likes]);
 
   const likePost = async () => {
     if (hasLiked) {
-      await deleteDoc(doc(db, "posts", id, "likes", session.user.uid));
+      await deleteDoc(doc(db, "posts", id, "likes", user.uid));
     } else {
-      await setDoc(doc(db, "posts", id, "likes", session.user.uid), {
-        username: session.user.username,
-      });
+      await setDoc(doc(db, "posts", id, "likes", user.uid), {
+        username: user.username,
+      })
+        .then(() => {
+          console.log("Success");
+        })
+        .catch((error) => {
+          console.log("Error")
+        });
     }
   }
 
@@ -59,8 +67,8 @@ function Post({ id, username, userImg, img, caption }) {
 
     await addDoc(collection(db, 'posts', id, 'comments'), {
       comment: commentToSend,
-      username: session.user.username,
-      userImage: session.user.image,
+      username: user.username,
+      userImage: user.image,
       timestamp: serverTimestamp(),
     });
   }
@@ -89,7 +97,7 @@ function Post({ id, username, userImg, img, caption }) {
       />
 
       {/* Buttons */}
-      {session && (
+      {user && (
         <div className="flex justify-between px-4 pt-4">
           <div className="flex space-x-4 ">
             {
@@ -142,7 +150,7 @@ function Post({ id, username, userImg, img, caption }) {
       )}
 
       {/* input box */}
-      {session && (
+      {user && (
         <form className="flex items-center p-4">
           <EmojiHappyIcon className="h-7" />
           <input

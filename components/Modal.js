@@ -8,9 +8,11 @@ import { db, storage } from "../firebase";
 import { addDoc, collection, doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { useSession } from "next-auth/react";
 import { ref, getDownloadURL, uploadString } from "firebase/storage";
+import { UserAuth } from "../pages/api/auth/[...nextauth]";
 
 function Modal() {
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
+  const { user, googleSignIn, logOut } = UserAuth();
   const [open, setOpen] = useRecoilState(modalState);
   const filePickerRef = useRef(null);
   const captionRef = useRef(null);
@@ -30,9 +32,9 @@ function Modal() {
     // 4. get a download URL from firebase storage and update the original post with the image
 
     const docRef = await addDoc(collection(db, 'posts'), {
-      username: session.user.username,
+      username: user.username,
       caption: captionRef.current.value,
-      profileImg: session.user.image,
+      profileImg: user.image,
       timestamp: serverTimestamp(),
     });
 
