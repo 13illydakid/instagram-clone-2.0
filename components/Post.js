@@ -14,11 +14,9 @@ import { addDoc, collection, deleteDoc, doc, onSnapshot, orderBy, query, serverT
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Moment from "react-moment";
-import { UserAuth } from "../pages/api/auth/[...nextauth]";
 
 function Post({ id, username, userImg, img, caption }) {
-  // const { data: session } = useSession();
-  const { user, googleSignIn, logOut } = UserAuth();
+  const { data: session } = useSession();
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [likes, setLikes] = useState([]);
@@ -39,23 +37,17 @@ function Post({ id, username, userImg, img, caption }) {
 
   useEffect(() => {
     setHasLiked(
-      likes.findIndex((like) => like.id === user?.uid) !== -1
+      likes.findIndex((like) => like.id === session?.user?.uid) !== -1
     )
   }, [likes]);
 
   const likePost = async () => {
     if (hasLiked) {
-      await deleteDoc(doc(db, "posts", id, "likes", user.uid));
+      await deleteDoc(doc(db, "posts", id, "likes", session.user.uid));
     } else {
-      await setDoc(doc(db, "posts", id, "likes", user.uid), {
-        username: user.displayName,
-      })
-        .then(() => {
-          console.log("Success");
-        })
-        .catch((error) => {
-          console.log("Error")
-        });
+      await setDoc(doc(db, "posts", id, "likes", session.user.uid), {
+        username: session.user.username,
+      });
     }
   }
 
@@ -65,10 +57,10 @@ function Post({ id, username, userImg, img, caption }) {
     const commentToSend = comment;
     setComment("");
 
-    await addDoc(collection(db, 'posts', id, 'comments', user.uid), {
+    await addDoc(collection(db, 'posts', id, 'comments'), {
       comment: commentToSend,
-      username: user.displayName,
-      userImage: user.image,
+      username: session.user.username,
+      userImage: session.user.image,
       timestamp: serverTimestamp(),
     });
   }
@@ -97,7 +89,7 @@ function Post({ id, username, userImg, img, caption }) {
       />
 
       {/* Buttons */}
-      {user && (
+      {session && (
         <div className="flex justify-between px-4 pt-4">
           <div className="flex space-x-4 ">
             {
@@ -136,7 +128,7 @@ function Post({ id, username, userImg, img, caption }) {
               />
               <p className="text-sm flex-1">
                 <span className="font-bold">
-                  {comment.data().displayName}
+                  {comment.data().username}
                 </span>{" "}
                 {comment.data().comment}
               </p>
@@ -150,7 +142,7 @@ function Post({ id, username, userImg, img, caption }) {
       )}
 
       {/* input box */}
-      {user && (
+      {session && (
         <form className="flex items-center p-4">
           <EmojiHappyIcon className="h-7" />
           <input

@@ -10,47 +10,15 @@ import {
   MenuIcon,
 } from "@heroicons/react/outline";
 import { HomeIcon } from "@heroicons/react/solid";
-// import { signIn, signOut, useSession } from "next-auth/react";
-import { useSession } from "next-auth/react";
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
 import { modalState } from "../atoms/modalAtom";
-import { UserAuth } from "../pages/api/auth/[...nextauth]";
 
 function Header() {
-
-  const { user, googleSignIn, logOut } = UserAuth();
-  const [loading, setLoading] = useState(true);
+  const { data: session } = useSession();
   const [open, setOpen] = useRecoilState(modalState);
   const router = useRouter();
-
-  const handleSignIn = async () => {
-    try {
-      await googleSignIn();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleSignOut = async () => {
-    try {
-      await logOut();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    const checkAuthentication = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 50));
-      setLoading(false);
-    };
-    checkAuthentication();
-  }, [user]);
-  // const { data: session } = useSession();
-  // const { user, googleSignIn, logOut } = UserAuth();
 
   return (
     <div className="shadow-sm border-b bg-white sticky top-0 z-50">
@@ -90,7 +58,7 @@ function Header() {
           <HomeIcon onClick={() => router.push("/")} className="navBtn" />
           <MenuIcon className="h-6 md:hidden cursor-pointer" />
 
-          {user ? (
+          {session ? (
             <>
               <div className="relative navBtn">
                 <PaperAirplaneIcon className="navBtn rotate-45" />
@@ -104,15 +72,14 @@ function Header() {
               <HeartIcon className="navBtn" />
 
               <img
-                onClick={handleSignOut}
-                // src={session?.user?.image}
-                src={user?.image}
+                onClick={signOut}
+                src={session?.user?.image}
                 alt="profile pic"
                 className="h-10 w-10 rounded-full cursor-pointer"
               />
             </>
           ) : (
-            <button onClick={handleSignIn}>Sign In</button>
+            <button onClick={signIn}>Sign In</button>
           )}
         </div>
       </div>
