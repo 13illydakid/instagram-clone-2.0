@@ -7,6 +7,13 @@ export const authOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code"
+        }
+      }
     }),
     // ...add more providers here
   ],
@@ -16,7 +23,7 @@ export const authOptions = {
     })
   ],
   pages: {
-    signIn: "/auth/signin",
+    Signin: "/auth/signin",
   },
   callbacks: {
     async jwt({ token, account, profile }) {
@@ -34,7 +41,7 @@ export const authOptions = {
         .toLowerCase();
 
       session.accessToken = token.accessToken;
-      session.user.uid = token.id;
+      session.user.uid = token.sub;
       return session;
     }
   },
@@ -62,3 +69,5 @@ export default NextAuth(authOptions);
 //  },
 // };
 // export default NextAuth(authOptions);
+
+//https://gallery.billychiu.dev/auth/signin?callbackUrl=https%3A%2F%2Fgallery.billychiu.dev&error=OAuthSignin
