@@ -17,9 +17,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 // function MyApp({ Component, pageProps}) {
   return (
     <SessionProvider session={session}>
-      {/* <RecoilRoot> */}
+      <RecoilRoot>
         <Component {...pageProps} />
-      {/* </RecoilRoot> */}
+      </RecoilRoot>
     </SessionProvider>
   );
 }

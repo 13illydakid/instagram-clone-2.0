@@ -18,8 +18,8 @@ import { useState } from "react";
 
 function Header() {
   const { data: session } = useSession();
-  // const [open, setOpen] = useRecoilState(modalState);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useRecoilState(modalState);
+  // const [open, setOpen] = useState(false);
   const router = useRouter();
 
   return (
