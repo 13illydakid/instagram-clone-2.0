@@ -26,14 +26,14 @@ export const authOptions = {
     signin: "/auth/signin",
   },
   callbacks: {
-    async jwt({ token, account, profile }) {
-      // Persist the OAuth access_token and or the user id to the token right after signin
-      if (account) {
-        token.accessToken = account.access_token
-        token.id = profile.id
-      }
-      return token
-    },
+    // async jwt({ token, account, profile }) {
+    //   // Persist the OAuth access_token and or the user id to the token right after signin
+    //   if (account) {
+    //     token.accessToken = account.access_token
+    //     token.id = profile.id
+    //   }
+    //   return token
+    // },
     async session({ session, token, user }) {
       session.user.username = session.user.name
         .split(" ")
