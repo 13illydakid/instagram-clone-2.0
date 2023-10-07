@@ -4,7 +4,7 @@ import Header from "../../components/Header";
 // import { useRouter } from "next/router";
 
 // Executed in Browser...
-function Signin({ providers }) {
+function signin({ providers }) {
    // const router = useRouter();
 
    return (
@@ -23,7 +23,7 @@ function Signin({ providers }) {
                      <button
                         className="p-3 bg-blue-500 rounded-lg text-white"
                         onClick={() => {
-                           signIn(provider.id, { callbackUrl: "/" });
+                           signIn(provider.id, { callbackUrl: "/auth" });
                            // router.push("/")
                         }
                         }
@@ -49,4 +49,4 @@ export async function getServerSideProps() {
    };
 }
 
-export default Signin;
+export default signin;
