@@ -1,26 +1,53 @@
 import { useContext, createContext, useState, useEffect } from "react";
 import { signInWithPopup, signOut, onAuthStateChanged, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../../../firebase";
+import { useAuthState } from "react-firebase-hooks/auth"
+import { useSession } from "next-auth/react";
 
 const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  // const [user, loading] = useAuthState(auth);
+  // const { data: session } = useSession();
+
+  // let credential;
+  // let token;
 
   const googleSignIn = () => {
     const provider = new GoogleAuthProvider();
-    provider.addScope('profile');
-    provider.addScope('email');
     signInWithPopup(auth, provider)
       .then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
-        // const user = result.user;
-        setUser(result.user);
+
+        // session.user.username = session.user.name
+        //   .split(" ")
+        //   .join("")
+        //   .toLowerCase();
+
+        // session.user.uid = token.id;
+
+        // setUser(session.user);
+
+
+        // const session = ({ result, token, user}) => {
+        //   setUser(result.user);
+        //   user.username = result.user.name.split(" ").join("").toLowerCase();
+        //   user.uid = token.sub;
+        // }
+        // return session();
+        // setUser(result.user);
+        // useEffect(() => {
+        //   const unsubscribe = onAuthStateChanged(users => {
+        //     setUser(users);
+        //   });
+        //   return () => unsubscribe();
+        // }, [user]);
       }).catch((error) => {
   const errorCode = error.code;
   const errorMessage = error.message;
-  const email = error.customData.email;
+  // const email = error.customData.email;
   const credential = GoogleAuthProvider.credentialFromError(error);
 })
   };

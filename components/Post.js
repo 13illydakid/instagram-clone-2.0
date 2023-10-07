@@ -48,7 +48,7 @@ function Post({ id, username, userImg, img, caption }) {
       await deleteDoc(doc(db, "posts", id, "likes", user.uid));
     } else {
       await setDoc(doc(db, "posts", id, "likes", user.uid), {
-        username: user.username,
+        username: user.displayName,
       })
         .then(() => {
           console.log("Success");
@@ -65,9 +65,9 @@ function Post({ id, username, userImg, img, caption }) {
     const commentToSend = comment;
     setComment("");
 
-    await addDoc(collection(db, 'posts', id, 'comments'), {
+    await addDoc(collection(db, 'posts', id, 'comments', user.uid), {
       comment: commentToSend,
-      username: user.username,
+      username: user.displayName,
       userImage: user.image,
       timestamp: serverTimestamp(),
     });
@@ -136,7 +136,7 @@ function Post({ id, username, userImg, img, caption }) {
               />
               <p className="text-sm flex-1">
                 <span className="font-bold">
-                  {comment.data().username}
+                  {comment.data().displayName}
                 </span>{" "}
                 {comment.data().comment}
               </p>
