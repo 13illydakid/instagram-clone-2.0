@@ -17,11 +17,11 @@ export const authOptions = {
     }),
     // ...add more providers here
   ],
-  secret: [
-    GoogleProvider({
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    })
-  ],
+  // secret: [
+  //   GoogleProvider({
+  //     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  //   })
+  // ],
   pages: {
     signin: "/auth/signin",
   },
