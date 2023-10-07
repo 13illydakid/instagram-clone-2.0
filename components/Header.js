@@ -1,5 +1,5 @@
 // import React from 'react'
-import Image from "next/legacy/image";
+import Image from "next/legacy/image"
 
 import {
   SearchIcon,
@@ -14,10 +14,12 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
 import { modalState } from "../atoms/modalAtom";
+import { useState } from "react";
 
 function Header() {
   const { data: session } = useSession();
-  const [open, setOpen] = useRecoilState(modalState);
+  // const [open, setOpen] = useRecoilState(modalState);
+  const [open, setOpen] = useState(false);
   const router = useRouter();
 
   return (
@@ -87,4 +89,4 @@ function Header() {
   )
 }
 
-export default Header;
+export default Header

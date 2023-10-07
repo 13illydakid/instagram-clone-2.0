@@ -1,12 +1,9 @@
 // import React from 'react'
-import { getProviders, signIn } from "next-auth/react";
+import { getProviders, signIn as SignIntoProvider } from "next-auth/react";
 import Header from "../../components/Header";
-// import { useRouter } from "next/router";
 
 // Executed in Browser...
-function signin({ providers }) {
-   // const router = useRouter();
-
+function signIn({ providers }) {
    return (
       <>
          <Header />
@@ -22,10 +19,8 @@ function signin({ providers }) {
                   <div key={provider.name}>
                      <button
                         className="p-3 bg-blue-500 rounded-lg text-white"
-                        onClick={() => {
-                           signIn(provider.id, { callbackUrl: "/" });
-                           // router.push("/")
-                        }
+                        onClick={() =>
+                           SignIntoProvider(provider.id, { callbackUrl: "/" })
                         }
                      >
                         Sign in with {provider.name}
@@ -49,4 +44,4 @@ export async function getServerSideProps() {
    };
 }
 
-export default signin;
+export default signIn;
