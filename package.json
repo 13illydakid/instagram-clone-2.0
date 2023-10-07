@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@auth/core": "^0.16.1",
     "@faker-js/faker": "^6.0.0",
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^1.0.6",

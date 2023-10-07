@@ -1,27 +1,39 @@
-import NextAuth from "next-auth"
-import GoogleProvider from "next-auth/providers/google"
+import NextAuth from "next-auth";
+// import GoogleProvider from "next-auth/providers/google";
+import Google from "next-auth/providers/google";
 
 export const authOptions = {
   // Configure one or more authentication providers
   providers: [
-    GoogleProvider({
+    Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      authorization: {
-        params: {
-          prompt: "consent",
-          access_type: "offline",
-          response_type: "code"
-        }
-      }
+      // authorization: {
+      //   params: {
+      //     prompt: "consent",
+      //     access_type: "offline",
+      //     response_type: "code"
+      //   }
+      // }
     }),
+    // GoogleProvider({
+    //   clientId: process.env.GOOGLE_CLIENT_ID,
+    //   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    //   authorization: {
+    //     params: {
+    //       prompt: "consent",
+    //       access_type: "offline",
+    //       response_type: "code"
+    //     }
+    //   }
+    // }),
     // ...add more providers here
   ],
-  secret: [
-    GoogleProvider({
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    })
-  ],
+  // secret: [
+  //   GoogleProvider({
+  //     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  //   })
+  // ],
   pages: {
     signin: "/auth/signin",
   },

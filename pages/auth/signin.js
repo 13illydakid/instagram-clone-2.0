@@ -23,7 +23,7 @@ function signin({ providers }) {
                      <button
                         className="p-3 bg-blue-500 rounded-lg text-white"
                         onClick={() => {
-                           signIn(provider.id, { callbackUrl: "/auth" });
+                           signIn(provider.id, { callbackUrl: "/" });
                            // router.push("/")
                         }
                         }
