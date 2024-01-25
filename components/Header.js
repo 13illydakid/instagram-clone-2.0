@@ -14,7 +14,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
 import { modalState } from "../atoms/modalAtom";
-import { useState } from "react";
+
 
 function Header() {
   const { data: session } = useSession();
